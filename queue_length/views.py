@@ -17,11 +17,14 @@ def queue_length(request):
 
 @api_view(['PUT'])
 def queue_length_update(request):
+	#load the data into the dataset
 	log_put=Logdata_put(queue_length=request.data['queue_length'])
-	log_put.save();
+	#saves it in the database
+	log_put.save() 
 	queue=Logdata_put.objects.first()
 	queue_serializer=Logdata_putSerializer(queue,data=request.data)
 	if queue_serializer.is_valid():
+		# saves the updates value
 		queue_serializer.save()
 		return JsonResponse(queue_serializer.data, status=status.HTTP_201_CREATED)
 	return JsonResponse(queue_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
