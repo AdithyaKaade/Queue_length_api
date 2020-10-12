@@ -29,9 +29,6 @@ def queue_length_update(request):
 
 	if(max_len - int(log_put.queue_length) >= 50 ):
 		return JsonResponse({"Invalid" : "queue_length"})
-	else:
-		#saves it in the database
-		log_put.save()
 
 	queue_serializer=Logdata_putSerializer(data=request.data)
 	if queue_serializer.is_valid():
